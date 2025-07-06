@@ -2,145 +2,135 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QR Code Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter:wght@400;700&display=swap"
-        rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap");
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f0f0f;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      color: whitesmoke;
+      box-sizing: border-box;
+      font-family: "Roboto", sans-serif;
+    }
 
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.8rem;
-            color: #00ffe7;
-            text-shadow: 0 0 10px #00ffe7;
-            margin-bottom: 30px;
-        }
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 30px;
+    }
 
-        #url {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 30px;
-            width: 100%;
-            max-width: 400px;
-        }
+    #heading {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        #link {
-            width: 100%;
-            padding: 15px;
-            font-size: 1rem;
-            border-radius: 10px;
-            border: 2px solid #00ffe7;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
+    #heading h1 {
+      font-size: 7vw;
+      font-family: "Poppins", sans-serif;
+    }
 
-        #link:focus {
-            border-color: #00ff88;
-        }
+    #url {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 30px;
+    }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(90deg, #00ffe7, #00ff88);
-            color: #0f0f0f;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 0 15px #00ffe7;
-            transition: transform 0.2s, box-shadow 0.3s;
-        }
+    #url input {
+      width: 40%;
+      height: 40px;
+      border-radius: 10px;
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px solid violet;
+      outline: none;
+      padding-left: 5vw;
+      margin-bottom: 20px;
+    }
 
-        button:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 20px #00ffb3;
-        }
+    #url button {
+      height: 40px;
+      width: 100px;
+      border-radius: 10px;
+      font-weight: bolder;
+      font-family: "Poppins", sans-serif;
+      background-color: transparent;
+      border: 2px solid violet;
+      transition: all 0.3s ease;
+    }
 
-        #container {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #1a1a1a;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 255, 231, 0.2);
-        }
+    #url button:hover {
+      background-color: violet;
+      box-shadow: 0 0 10px 2px violet;
+      color: black;
+    }
 
-        @media (max-width: 500px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            button,
-            #link {
-                font-size: 0.95rem;
-            }
-        }
-    </style>
+    #container {
+      height: 300px;
+      width: 300px;
+      border: 2px solid violet;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 
 <body>
 
+  <div id="heading">
     <h1>QR Code Generator</h1>
+  </div>
 
-    <div id="url">
-        <input type="text" id="link" placeholder="Paste your link here..." />
-        <button onclick="generateQr()">Generate QR</button>
-    </div>
+  <div id="url">
+    <input type="text" id="link" placeholder="Paste your link here..." />
+    <button onclick="generateQr()">Generate QR</button>
+  </div>
 
-    <div id="container"></div>
+  <div id="container"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    <script>
-        let qrcode = null;
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script>
+    let qrcode = null;
 
-        function generateQr() {
-            const container = document.getElementById("container");
-            const link = document.getElementById("link").value.trim();
+    function generateQr() {
+      const container = document.getElementById("container");
+      const link = document.getElementById("link").value.trim();
 
-            container.innerHTML = "";
+      container.innerHTML = "";
 
-            if (link === "") {
-                alert("Please enter a valid link.");
-                return;
-            }
+      if (link === "") {
+        alert("Please enter a valid link.");
+        return;
+      }
 
-            if (qrcode) {
-                qrcode.clear();
-                qrcode = null;
-            }
+      if (qrcode) {
+        qrcode.clear();
+        qrcode = null;
+      }
 
-            qrcode = new QRCode(container, {
-                text: link,
-                width: 200,
-                height: 200,
-                colorDark: "#ffffff",
-                colorLight: "#0f0f0f",
-                correctLevel: QRCode.CorrectLevel.H
-            });
-        }
-    </script>
+      qrcode = new QRCode(container, {
+        text: link,
+        width: 200,
+        height: 200,
+        colorDark: "#ffffff",
+        colorLight: "#0f0f0f",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+  </script>
 </body>
 
 </html>

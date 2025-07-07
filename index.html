@@ -2,135 +2,250 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR Code Generator</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator</title>
 
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap");
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap");
 
-    * {
-      margin: 0;
-      padding: 0;
-      color: whitesmoke;
-      box-sizing: border-box;
-      font-family: "Roboto", sans-serif;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            color: whitesmoke;
+            box-sizing: border-box;
+            font-family: "Roboto", sans-serif;
+        }
 
-    html,
-    body {
-      height: 100%;
-      width: 100%;
-      background-color: black;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: 30px;
-    }
+        body {
+            background-color: #0a0a0a;
+            /* color: #e0f7ff; */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
 
-    #heading {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        #heading h1 {
+            font-size: 3.5rem;
+            font-family: "Poppins", sans-serif;
+            color: whitesmoke;
+            text-shadow: 0 0 10px whitesmoke;
+            margin-bottom: 40px;
+            text-align: center;
+        }
 
-    #heading h1 {
-      font-size: 7vw;
-      font-family: "Poppins", sans-serif;
-    }
+        #url {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
 
-    #url {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      margin-bottom: 30px;
-    }
+        #url input {
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #1c1c1c;
+            color: #ffffff;
+            border: 2px solid whitesmoke;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
 
-    #url input {
-      width: 40%;
-      height: 40px;
-      border-radius: 10px;
-      background-color: transparent;
-      border: none;
-      border-bottom: 2px solid violet;
-      outline: none;
-      padding-left: 5vw;
-      margin-bottom: 20px;
-    }
+        #url input:focus {
+            border-color: whitesmoke;
+            outline: none;
+        }
 
-    #url button {
-      height: 40px;
-      width: 100px;
-      border-radius: 10px;
-      font-weight: bolder;
-      font-family: "Poppins", sans-serif;
-      background-color: transparent;
-      border: 2px solid violet;
-      transition: all 0.3s ease;
-    }
+        #url button {
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            font-family: "Poppins", sans-serif;
+            color: whitesmoke;
+            background-color: transparent;
+            border: 2px solidwhitesmoke;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
 
-    #url button:hover {
-      background-color: violet;
-      box-shadow: 0 0 10px 2px violet;
-      color: black;
-    }
+        #url button:hover,
+        #downloadBtn:hover {
+            background-color: whitesmoke;
+            color: black;
+            box-shadow: 0 0 12px 3px rgba(0, 191, 255, 0.5);
+        }
 
-    #container {
-      height: 300px;
-      width: 300px;
-      border: 2px solid violet;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
+        #qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #container {
+            width: 250px;
+            height: 250px;
+            border: 2px solid whitesmoke;
+            border-radius: 12px;
+            background-color: #1c1c1c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
+            position: relative;
+        }
+
+        #spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid whitesmoke;
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+            position: absolute;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #downloadBtn {
+            display: none;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            font-family: "Poppins", sans-serif;
+            color: whitesmoke;
+            background-color: transparent;
+            border: 2px solidwhitesmoke;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            #heading h1 {
+                font-size: 2.3rem;
+            }
+
+            #url input,
+            #url button,
+            #downloadBtn {
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+
+            #container {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <div id="heading">
-    <h1>QR Code Generator</h1>
-  </div>
+    <div id="heading">
+        <h1>QR Code Generator</h1>
+    </div>
 
-  <div id="url">
-    <input type="text" id="link" placeholder="Paste your link here..." />
-    <button onclick="generateQr()">Generate QR</button>
-  </div>
+    <div id="url">
+        <input type="text" id="link" placeholder="Paste your link here..." oninput="debouncedGenerateQr()" />
+        <button onclick="generateQr()">Generate QR</button>
+    </div>
 
-  <div id="container"></div>
+    <!-- QR Section with download button placed below QR -->
+    <div id="qr-section">
+        <div id="container">
+            <div id="spinner"></div>
+        </div>
+        <button id="downloadBtn" onclick="downloadQr()">Download QR</button>
+    </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-  <script>
-    let qrcode = null;
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        let qrcode = null;
+        let timeout = null;
 
-    function generateQr() {
-      const container = document.getElementById("container");
-      const link = document.getElementById("link").value.trim();
+        function showSpinner() {
+            document.getElementById("spinner").style.display = "block";
+        }
 
-      container.innerHTML = "";
+        function hideSpinner() {
+            document.getElementById("spinner").style.display = "none";
+        }
 
-      if (link === "") {
-        alert("Please enter a valid link.");
-        return;
-      }
+        function generateQr() {
+            const container = document.getElementById("container");
+            const link = document.getElementById("link").value.trim();
+            const downloadBtn = document.getElementById("downloadBtn");
 
-      if (qrcode) {
-        qrcode.clear();
-        qrcode = null;
-      }
+            container.innerHTML = '<div id="spinner"></div>';
+            showSpinner();
+            downloadBtn.style.display = "none";
 
-      qrcode = new QRCode(container, {
-        text: link,
-        width: 200,
-        height: 200,
-        colorDark: "#ffffff",
-        colorLight: "#0f0f0f",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    }
-  </script>
+            if (link === "") {
+                alert("Please enter a valid link.");
+                hideSpinner();
+                return;
+            }
+
+            setTimeout(() => {
+                container.innerHTML = ""; // Clear previous QR
+                if (qrcode) {
+                    qrcode.clear();
+                    qrcode = null;
+                }
+
+                qrcode = new QRCode(container, {
+                    text: link,
+                    width: 200,
+                    height: 200,
+                    colorDark: "#ffffff",
+                    colorLight: "#1c1c1c",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+
+                setTimeout(() => {
+                    downloadBtn.style.display = "inline-block";
+                }, 100);
+
+                hideSpinner();
+            }, 500);
+        }
+
+        function debouncedGenerateQr() {
+            clearTimeout(timeout);
+            timeout = setTimeout(generateQr, 800);
+        }
+
+        function downloadQr() {
+            const qrCanvas = document.querySelector("#container canvas");
+            if (!qrCanvas) {
+                alert("No QR code to download.");
+                return;
+            }
+
+            const link = document.createElement("a");
+            link.href = qrCanvas.toDataURL("image/png");
+            link.download = "qr-code.png";
+            link.click();
+        }
+    </script>
+
 </body>
 
 </html>

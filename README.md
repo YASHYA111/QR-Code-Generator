@@ -11,7 +11,7 @@ A sleek, dark-themed QR Code Generator built using **HTML**, **CSS**, and **Java
 
 ## 🚀 Features
 
-- 🔗 Paste any URL to generate a QR code.
+- ..🔗 Paste any URL to generate a QR code.
 - ⚡ Live QR generation with debounce
 - 🎨 Stylish and responsive UI with custom fonts
 - 🌀 Spinner animation while generating QR

@@ -23,4 +23,4 @@ A sleek, dark-themed QR Code Generator built using **HTML**, **CSS**, and **Java
 - HTML5
 - CSS3
 - JavaScript
-- [QRCode.js](https://github.com/davidshimjs/qrcodejs)..
+- [QRCode.js](https://github.com/davidshimjs/qrcodejs)...

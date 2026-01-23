@@ -1,4 +1,4 @@
-.# QR-Code-Generator
+...# QR-Code-Generator
 Small But Usefull Project
 v# ⚡ QR Code Generator
 
